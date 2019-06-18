@@ -1,5 +1,6 @@
 package io.pivotal.pal.tracker.backlog.data;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -42,6 +43,10 @@ public class StoryDataGateway {
             "select id, project_id, name from stories where project_id = ?",
             rowMapper, projectId
         );
+    }
+
+    public List<StoryRecord> findLastStories(final Integer max) {
+        return jdbcTemplate.query("select id, project_id, name from stories order by id desc limit ?", rowMapper, max);
     }
 
 

@@ -23,7 +23,8 @@ public class StoryControllerTest {
 
     private StoryDataGateway storyDataGateway = mock(StoryDataGateway.class);
     private ProjectClient client = mock(ProjectClient.class);
-    private StoryController storyController = new StoryController(storyDataGateway, client);
+    private ConfigMaxStories maxStories = mock(ConfigMaxStories.class);
+    private StoryController storyController = new StoryController(storyDataGateway, client, maxStories);
 
     @Test
     public void testCreate() {
@@ -94,5 +95,10 @@ public class StoryControllerTest {
             testStoryInfoBuilder().id(12L).build(),
             testStoryInfoBuilder().id(13L).build()
         );
+    }
+
+    @Test
+    public void testLastFive() {
+
     }
 }

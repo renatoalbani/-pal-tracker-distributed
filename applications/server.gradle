@@ -30,7 +30,8 @@ bootRun.environment([
         "APPLICATION_OAUTH_ENABLED": true,
         "SECURITY_OAUTH2_CLIENT_CLIENT_ID": "tracker-client",
         "SECURITY_OAUTH2_CLIENT_CLIENT_SECRET": "supersecret",
-        "REGISTRATION_SERVER_ENDPOINT": "http://registration-server"
+        "REGISTRATION_SERVER_ENDPOINT": "http://registration-server",
+        "MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE": "*"
 ])
 
 test.environment([

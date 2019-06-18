@@ -14,6 +14,7 @@ import java.util.Map;
 import static io.pivotal.pal.tracker.backlog.data.StoryFields.storyFieldsBuilder;
 import static io.pivotal.pal.tracker.backlog.data.StoryRecord.storyRecordBuilder;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertEquals;
 
 public class StoryDataGatewayTest {
 
@@ -62,5 +63,43 @@ public class StoryDataGatewayTest {
                 .name("aStory")
                 .build()
         );
+    }
+
+    @Test
+    public void testListLastStories(){
+        template.execute("insert into stories (id, project_id, name) values (1346, 22, 'aStory1')");
+        template.execute("insert into stories (id, project_id, name) values (1347, 22, 'aStory2')");
+        template.execute("insert into stories (id, project_id, name) values (1348, 22, 'aStory3')");
+        template.execute("insert into stories (id, project_id, name) values (1349, 22, 'aStory4')");
+        template.execute("insert into stories (id, project_id, name) values (1350, 22, 'aStory5')");
+        template.execute("insert into stories (id, project_id, name) values (1351, 22, 'aStory6')");
+
+        List<StoryRecord> lastStories = gateway.findLastStories(5);
+
+        assertEquals(5, lastStories.size());
+
+        assertThat(lastStories).containsSequence(
+                storyRecordBuilder()
+                        .id(1351)
+                        .projectId(22)
+                        .name("aStory6").build(),
+                storyRecordBuilder()
+                        .id(1350)
+                        .projectId(22)
+                        .name("aStory5").build(),
+                storyRecordBuilder()
+                        .id(1349)
+                        .projectId(22)
+                        .name("aStory4").build(),
+                storyRecordBuilder()
+                        .id(1348)
+                        .projectId(22)
+                        .name("aStory3").build(),
+                storyRecordBuilder()
+                        .id(1347)
+                        .projectId(22)
+                        .name("aStory2").build()
+        );
+
     }
 }

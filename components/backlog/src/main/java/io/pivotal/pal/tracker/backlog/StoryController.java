@@ -16,12 +16,15 @@ import static java.util.stream.Collectors.toList;
 @RestController
 @RequestMapping("/stories")
 public class StoryController {
+
+    private final ConfigMaxStories configMaxStories;
     private final StoryDataGateway gateway;
     private final ProjectClient client;
 
-    public StoryController(StoryDataGateway gateway, ProjectClient client) {
+    public StoryController(StoryDataGateway gateway, ProjectClient client, ConfigMaxStories configMaxStories) {
         this.gateway = gateway;
         this.client = client;
+        this.configMaxStories = configMaxStories;
     }
 
 
@@ -40,6 +43,13 @@ public class StoryController {
         return gateway.findAllByProjectId(projectId).stream()
             .map(this::present)
             .collect(toList());
+    }
+
+    @GetMapping("/last")
+    public List<StoryInfo> listLastFiveStories() {
+        return gateway.findLastStories(configMaxStories.getMaxStories()).stream()
+                .map(this::present)
+                .collect(toList());
     }
 
 
