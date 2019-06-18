@@ -95,4 +95,9 @@ public class StoryControllerTest {
             testStoryInfoBuilder().id(13L).build()
         );
     }
+
+    @Test
+    public void testLastFive() {
+
+    }
 }
